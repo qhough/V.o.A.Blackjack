@@ -1,26 +1,31 @@
 package V.o.ABlackjack.Models;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
-    private final String nickname;
     int total;
     boolean isBusted;
-    private final ArrayList<Card> hand;
+    private ArrayList<Card> hand = new ArrayList<>();
+    private String name;
+    private int aceCount;
 
-
-    public Player(String nickname, ArrayList<Card> hand) {
-        this.nickname = nickname;
-        this.hand = hand;
+    public int getAceCount() {
+        return aceCount;
     }
 
-    public String getNickname() {
-        return nickname;
+    public void setAceCount(int aceCount) {
+        this.aceCount = aceCount;
     }
 
-    public void addCard(Card card){
-        hand.add(card);
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getTotal() {
         return total;
     }
@@ -36,14 +41,44 @@ public class Player {
     public void setBusted(boolean busted) {
         isBusted = busted;
     }
-    public void checkBusted( Player x){
-        int total=0;
-        for(Card card: x.getHand()){
-            total += card.getValue();
-        }
-        if(total >=22){
-            x.setBusted(true);
-        }
+
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
     }
 
-}
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public void checkBusted(Player x) {
+        int total = 0;
+            for (Card card : x.getHand()) {
+                total += card.getValue();
+            }
+            if (total >= 22) {
+                //if (x.getHand().contains(new Card(Faces.ACE11, Suit.CLUBS)) || x.getHand().contains(new Card(Faces.ACE11, Suit.SPADES)) || x.getHand().contains(new Card(Faces.ACE11, Suit.HEARTS)) || x.getHand().contains(new Card(Faces.ACE11, Suit.DIAMOND))) {
+                    int i = 0;
+                    for (Card c: x.getHand()) {
+                        if(c.getValue() == 11 && total>= 22 ){
+                            Suit suit = x.getHand().get(i).getSuit();
+                            x.getHand().set(i, new Card(Faces.ACE, suit));
+                            total =0;
+                            for (Card card : x.getHand()) {
+                                total += card.getValue();
+                            }
+                        }
+                        i++;
+                    }
+                    int newTotal = 0;
+                    for (Card card : x.getHand()) {
+                        newTotal += card.getValue();
+                    }
+                    x.setTotal(newTotal);
+                }
+                if(total>=22) {
+                    x.setBusted(true);
+                    x.setTotal(-1);
+                    System.out.println(x.getName() + ", you have busted!");
+                }
+        }
+    }

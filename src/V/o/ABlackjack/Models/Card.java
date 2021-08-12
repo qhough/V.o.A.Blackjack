@@ -1,5 +1,3 @@
-package V.o.ABlackjack.Models;
-
 public class Card {
         private Faces value;
         private Suit suit;
@@ -8,6 +6,7 @@ public class Card {
             this.value = newValue;
             this.suit = newSuit;
         }
+
 
         public int getValue(){
             return value.getValue();
@@ -24,17 +23,21 @@ public class Card {
 
         public String toString(){
             String description = "";
-            if(value.getValue()!=10) {
+            if(value.getValue()!=10 && value.getValue() !=1 && value.getValue()!= 11) {
                 description = String.valueOf(value.getValue());
             }else{
-                if(value==Faces.TEN){
+                if(value==Faces.ACE){
+                    description = "Ace";
+                }else if(value==Faces.TEN){
                     description = String.valueOf(value.getValue());
                 }else if(value==Faces.JACK){
                     description = "Jack";
                 }else if(value==Faces.QUEEN){
                     description = "Queen";
-                }else{
+                }else if(value == Faces.KING){
                     description = "King";
+                }else{
+                    description = "Ace";
                 }
             }
             description += " of ";
@@ -50,3 +53,4 @@ public class Card {
             return description;
         }
     }
+

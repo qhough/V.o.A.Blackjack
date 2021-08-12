@@ -1,13 +1,15 @@
 package V.o.ABlackjack.Models;
 
+package V.o.ABlackjack.Models;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
     private static final ArrayList<Card> deck = new ArrayList<>();
 
-    public static ArrayList<Card>  deckGenerator(){
-        ArrayList<Card> deck = new ArrayList<>();
+    public Deck(){
+        
         deck.add(new Card(Faces.TWO, Suit.HEARTS));
         deck.add(new Card(Faces.TWO, Suit.DIAMOND));
         deck.add(new Card(Faces.TWO, Suit.CLUBS));
@@ -56,11 +58,11 @@ public class Deck {
         deck.add(new Card(Faces.KING, Suit.HEARTS));
         deck.add(new Card(Faces.KING, Suit.CLUBS));
         deck.add(new Card(Faces.KING, Suit.SPADES));
-        deck.add(new Card(Faces.ACE, Suit.DIAMOND));
-        deck.add(new Card(Faces.ACE, Suit.HEARTS));
-        deck.add(new Card(Faces.ACE, Suit.CLUBS));
-        deck.add(new Card(Faces.ACE, Suit.SPADES));
-        return deck;
+        deck.add(new Card(Faces.ACE11, Suit.DIAMOND));
+        deck.add(new Card(Faces.ACE11, Suit.HEARTS));
+        deck.add(new Card(Faces.ACE11, Suit.CLUBS));
+        deck.add(new Card(Faces.ACE11, Suit.SPADES));
+
     }
     public static void shuffleDeck(){
         Collections.shuffle(deck);
