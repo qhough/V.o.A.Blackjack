@@ -55,8 +55,8 @@ public class Player {
             for (Card card : x.getHand()) {
                 total += card.getValue();
             }
+            x.setTotal(total);
             if (total >= 22) {
-                //if (x.getHand().contains(new Card(Faces.ACE11, Suit.CLUBS)) || x.getHand().contains(new Card(Faces.ACE11, Suit.SPADES)) || x.getHand().contains(new Card(Faces.ACE11, Suit.HEARTS)) || x.getHand().contains(new Card(Faces.ACE11, Suit.DIAMOND))) {
                     int i = 0;
                     for (Card c: x.getHand()) {
                         if(c.getValue() == 11 && total>= 22 ){
@@ -69,11 +69,7 @@ public class Player {
                         }
                         i++;
                     }
-                    int newTotal = 0;
-                    for (Card card : x.getHand()) {
-                        newTotal += card.getValue();
-                    }
-                    x.setTotal(newTotal);
+                    x.setTotal(total);
                 }
                 if(total>=22) {
                     x.setBusted(true);
