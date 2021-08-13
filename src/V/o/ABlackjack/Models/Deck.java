@@ -1,7 +1,5 @@
 package V.o.ABlackjack.Models;
 
-package V.o.ABlackjack.Models;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

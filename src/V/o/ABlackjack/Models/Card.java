@@ -1,6 +1,7 @@
+package V.o.ABlackjack.Models;
 public class Card {
-        private Faces value;
-        private Suit suit;
+        private final Faces value;
+        private final Suit suit;
 
         public Card(Faces newValue, Suit newSuit){
             this.value = newValue;
@@ -22,7 +23,7 @@ public class Card {
 
 
         public String toString(){
-            String description = "";
+            String description;
             if(value.getValue()!=10 && value.getValue() !=1 && value.getValue()!= 11) {
                 description = String.valueOf(value.getValue());
             }else{
