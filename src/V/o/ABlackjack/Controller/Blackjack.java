@@ -5,6 +5,7 @@ import V.o.ABlackjack.Models.Deck;
 import V.o.ABlackjack.Models.Player;
 import V.o.ABlackjack.View.blackjackIO;
 
+
 import java.util.ArrayList;
 
 public class Blackjack {
@@ -20,6 +21,7 @@ public class Blackjack {
         startGame(playerPlaying);
         onHit();
         writeToLeaderBorads();
+
     }
     public static void runBlackjackSame() {
         Deck.shuffleDeck();
@@ -48,14 +50,18 @@ public class Blackjack {
     }
 
 
-    public static void onHit() {
+    public static void onHit()  {
+
         for(Player p: players){
             boolean finished = false;
             p.getHand().add(getNextCard());
             p.getHand().add(getNextCard());
             p.checkBusted(p);
-            while(p.isBusted() & !finished){
+            while(!p.isBusted() & !finished){
                 System.out.println(p.getName() + " You Have : " + p.getHand().toString() +" Total:" + p.getTotal())  ;
+                if(p != players.get(0)) {
+                    System.out.println("The dealer has: " + players.get(0).getTotal());
+                }
                 System.out.println(p.getName() + ": Would you like to hit or stand\n 0)Hit \n 1)Stand");
                 int choice = blackjackIO.promptForInt(0,1);
                 if(choice == 0){
@@ -68,7 +74,7 @@ public class Blackjack {
         }
         for(Player p: players){
             int totalPlayer = 0;
-            if(p.isBusted()){
+            if(!p.isBusted()){
                 for(Card card : p.getHand()){
                     totalPlayer += card.getValue();
                 }
@@ -79,15 +85,17 @@ public class Blackjack {
     }
     public static void checkWin(){
         for(Player p: players){
-            if(p != players.get(0) && p.isBusted()){
+            if(p != players.get(0) && !p.isBusted()){
                 if(p.getTotal() > players.get(0).getTotal()){
                     winners.add(p);
+                    p.setTimesWon(p.getTimesWon()+1);
                 }
             }
         }
     }
     public static void writeToLeaderBorads(){
         StringBuilder winnersResults = new StringBuilder();
+
         if(winners.size()== 0){
             System.out.println("You all suck");
         }else{
@@ -96,14 +104,16 @@ public class Blackjack {
             for (Player winner: winners) {
                 if(i == 0){
                     winnersResults.append(winner.getName());
+
                     i++;
                 }else{
                     winnersResults.append(", ").append(winner.getName());
                 }
             }
             winnersResults.append("\n You have Won!!!!!!!");
-            System.out.println(winnersResults);
+            System.out.println(winnersResults.toString());
         }
+
         String toContinue = blackjackIO.promptForStringChoice("Would you like to continue? (Y/N)","Y","N");
         if(toContinue.equalsIgnoreCase("Y")){
             String playersChoice =blackjackIO.promptForStringChoice("Play with the same people? (Y/N)","Y", "N");
@@ -112,12 +122,34 @@ public class Blackjack {
                 winners.clear();
                 runBlackjackSame();
             }else{
+                if(winners.size() != 0) {
+                    write();
+                }
                 System.out.println("Starting over.");
                 winners.clear();
                 runBlackjack();
             }
         }else{
+            if(winners.size() != 0) {
+                write();
+            }
             System.out.println("Goodbye.");
         }
+    }
+    public static void write(){
+        StringBuilder winnersResultsWrite = new StringBuilder();
+        winnersResultsWrite.append("Congratulations: ");
+        for (Player winner:winners) {
+            String timeChoice = "";
+            if (winner.getTimesWon() == 1) {
+                timeChoice = "time";
+            } else {
+                timeChoice = "times";
+
+            }
+            winnersResultsWrite.append(winner.getName()).append(", You won ").append(winner.getTimesWon()).append(" ").append(timeChoice).append(", ");
+        }
+        blackjackIO.writeTextToFile("Leaderboards.txt", winnersResultsWrite.toString(), blackjackIO.timeStamp(),true );
+
     }
 }

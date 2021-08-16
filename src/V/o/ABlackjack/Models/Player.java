@@ -7,6 +7,15 @@ public class Player {
     boolean isBusted;
     private ArrayList<Card> hand = new ArrayList<>();
     private String name;
+    private int timesWon;
+    public int getTimesWon() {
+        return timesWon;
+    }
+
+    public void setTimesWon(int timesWon) {
+        this.timesWon = timesWon;
+    }
+
 
     public String getName() {
         return name;
@@ -25,7 +34,7 @@ public class Player {
     }
 
     public boolean isBusted() {
-        return !isBusted;
+        return isBusted;
     }
 
     public void setBusted(boolean busted) {
