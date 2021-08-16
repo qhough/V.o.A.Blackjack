@@ -7,11 +7,14 @@ import V.o.ABlackjack.View.blackjackIO;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Blackjack {
     private static final Deck deck =  new Deck();
     public static ArrayList<Player> players = new ArrayList<>();
     public static ArrayList<Player> winners = new ArrayList<>();
+    public static
+    Random dealerChooser = new Random();
 
     public static void runBlackjack() {
         Deck.shuffleDeck();
@@ -23,6 +26,7 @@ public class Blackjack {
         writeToLeaderBorads();
 
     }
+
     public static void runBlackjackSame() {
         Deck.shuffleDeck();
         for(Player x: players){
@@ -49,7 +53,6 @@ public class Blackjack {
         }
     }
 
-
     public static void onHit()  {
 
         for(Player p: players){
@@ -58,17 +61,25 @@ public class Blackjack {
             p.getHand().add(getNextCard());
             p.checkBusted(p);
             while(!p.isBusted() & !finished){
-                System.out.println(p.getName() + " You Have : " + p.getHand().toString() +" Total:" + p.getTotal())  ;
                 if(p != players.get(0)) {
-                    System.out.println("The dealer has: " + players.get(0).getTotal());
-                }
-                System.out.println(p.getName() + ": Would you like to hit or stand\n 0)Hit \n 1)Stand");
-                int choice = blackjackIO.promptForInt(0,1);
-                if(choice == 0){
-                    p.getHand().add(getNextCard());
-                    p.checkBusted(p);
+                    System.out.println(p.getName() + " You Have : " + p.getHand().toString() + " Total:" + p.getTotal());
+                    if (p != players.get(0)) {
+                        System.out.println("The dealer has: " + players.get(0).getHand().get(0) + " as their first card.");
+                    }
+                    System.out.println(p.getName() + ": Would you like to hit or stand\n 0)Hit \n 1)Stand");
+                    int choice = blackjackIO.promptForInt(0, 1);
+                    if (choice == 0) {
+                        p.getHand().add(getNextCard());
+                        p.checkBusted(p);
+                    } else {
+                        finished = true;
+                    }
                 }else{
-                    finished = true;
+                    while(dealerChoice()){
+                        p.getHand().add(getNextCard());
+                        p.checkBusted(p);
+                    }
+                    finished =true;
                 }
             }
         }
@@ -83,6 +94,22 @@ public class Blackjack {
         }
         checkWin();
     }
+
+    public static boolean dealerChoice() {
+        if (players.get(0).getTotal() > -1 && players.get(0).getTotal() < 12) {
+            return true;
+        } else if (players.get(0).getTotal() < 14) {
+            int choice = dealerChooser.nextInt(2);
+            System.out.println(choice);
+            return choice == 0;
+        } else if (players.get(0).getTotal() > 17) {
+            int choice = dealerChooser.nextInt(5);
+            return choice == 0 || choice == 1;
+        } else{
+            return false;
+        }
+    }
+
     public static void checkWin(){
         for(Player p: players){
             if(p != players.get(0) && !p.isBusted()){
@@ -93,9 +120,10 @@ public class Blackjack {
             }
         }
     }
+
     public static void writeToLeaderBorads(){
         StringBuilder winnersResults = new StringBuilder();
-
+        System.out.println("The dealer has: "+ players.get(0).getTotal());
         if(winners.size()== 0){
             System.out.println("You all suck");
         }else{
@@ -136,6 +164,7 @@ public class Blackjack {
             System.out.println("Goodbye.");
         }
     }
+
     public static void write(){
         StringBuilder winnersResultsWrite = new StringBuilder();
         winnersResultsWrite.append("Congratulations: ");

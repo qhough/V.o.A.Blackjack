@@ -61,6 +61,7 @@ public class blackjackIO {
             }
         } while(true);
     }
+
     public static void writeTextToFile(String filePath, String text, String date, boolean append) {
         //try with resources
         try {
