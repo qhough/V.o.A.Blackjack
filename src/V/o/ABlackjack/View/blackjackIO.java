@@ -1,7 +1,11 @@
 package V.o.ABlackjack.View;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class blackjackIO {
     private static final BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
@@ -56,5 +60,20 @@ public class blackjackIO {
                 System.err.println("Please try again.");
             }
         } while(true);
+    }
+    public static void writeTextToFile(String filePath, String text, String date, boolean append) {
+        //try with resources
+        try {
+            FileWriter writer = new FileWriter(filePath, append);
+            writer.write( text + "-" + date +"\n");
+            writer.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+    public static String timeStamp(){
+        LocalDateTime localDate = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        return dateTimeFormatter.format(localDate);
     }
 }
