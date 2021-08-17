@@ -44,19 +44,19 @@ public class blackjackIO {
         do {
 
             try {
-                String rawInput = consoleIn.readLine();
+                String rawInput = consoleIn.readLine().trim();
                 int input = Integer.parseInt(rawInput);
                 if(input < min || input > max) {
                     throw new IllegalArgumentException(
-                            "input must be between " + min + " and " + max);
+                            "number must be between " + min + " and " + max);
                 }
                 return input;
             } catch (NumberFormatException ex) {
-                System.err.println("You must enter a valid integer.");
+                System.err.println("You must enter a valid number.");
                 System.err.println("Please try again.");
             } catch (Exception ex) {
                 System.err.println(
-                        "You have to enter an integer between " + min + " and " + max + ".");
+                        "You have to enter an number between " + min + " and " + max + ".");
                 System.err.println("Please try again.");
             }
         } while(true);

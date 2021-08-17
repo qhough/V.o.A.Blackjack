@@ -1,5 +1,7 @@
 package V.o.ABlackjack.Models;
 
+import V.o.ABlackjack.Controller.Blackjack;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -8,6 +10,7 @@ public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
     private String name;
     private int timesWon;
+
     public int getTimesWon() {
         return timesWon;
     }
@@ -34,7 +37,7 @@ public class Player {
     }
 
     public boolean isBusted() {
-        return isBusted;
+        return !isBusted;
     }
 
     public void setBusted(boolean busted) {
@@ -79,7 +82,9 @@ public class Player {
         if (total >= 22) {
             x.setBusted(true);
             x.setTotal(-1);
-            System.out.println(x.getName() + ", you have busted!");
+            if (x != Blackjack.players.get(0)) {
+                System.out.println(x.getName() + ", you have busted!");
+            }
         }
     }
 }

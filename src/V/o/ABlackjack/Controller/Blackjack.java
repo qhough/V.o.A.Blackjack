@@ -1,8 +1,6 @@
 package V.o.ABlackjack.Controller;
 
-import V.o.ABlackjack.Models.Card;
-import V.o.ABlackjack.Models.Deck;
-import V.o.ABlackjack.Models.Player;
+import V.o.ABlackjack.Models.*;
 import V.o.ABlackjack.View.blackjackIO;
 
 
@@ -19,7 +17,7 @@ public class Blackjack {
     public static void runBlackjack() {
         Deck.shuffleDeck();
         players.clear();
-        System.out.println("How many people are playing?");
+        System.out.println("How many people are playing? (1-4)");
         int playerPlaying = blackjackIO.promptForInt(1,4);
         startGame(playerPlaying);
         onHit();
@@ -60,7 +58,7 @@ public class Blackjack {
             p.getHand().add(getNextCard());
             p.getHand().add(getNextCard());
             p.checkBusted(p);
-            while(!p.isBusted() & !finished){
+            while(p.isBusted() & !finished){
                 if(p != players.get(0)) {
                     System.out.println(p.getName() + " You Have : " + p.getHand().toString() + " Total:" + p.getTotal());
                     if (p != players.get(0)) {
@@ -85,7 +83,7 @@ public class Blackjack {
         }
         for(Player p: players){
             int totalPlayer = 0;
-            if(!p.isBusted()){
+            if(p.isBusted()){
                 for(Card card : p.getHand()){
                     totalPlayer += card.getValue();
                 }
@@ -100,7 +98,6 @@ public class Blackjack {
             return true;
         } else if (players.get(0).getTotal() < 14) {
             int choice = dealerChooser.nextInt(2);
-            System.out.println(choice);
             return choice == 0;
         } else if (players.get(0).getTotal() > 17) {
             int choice = dealerChooser.nextInt(5);
@@ -112,7 +109,7 @@ public class Blackjack {
 
     public static void checkWin(){
         for(Player p: players){
-            if(p != players.get(0) && !p.isBusted()){
+            if(p != players.get(0) && p.isBusted()){
                 if(p.getTotal() > players.get(0).getTotal()){
                     winners.add(p);
                     p.setTimesWon(p.getTimesWon()+1);
@@ -123,7 +120,11 @@ public class Blackjack {
 
     public static void writeToLeaderBorads(){
         StringBuilder winnersResults = new StringBuilder();
-        System.out.println("The dealer has: "+ players.get(0).getTotal());
+        int newDealerTotal=0;
+        for(int i = 0; i<players.get(0).getHand().size();i++) {
+            newDealerTotal += players.get(0).getHand().get(i).getValue();
+        }
+        System.out.println("The dealer has: "+ newDealerTotal);
         if(winners.size()== 0){
             System.out.println("You all suck");
         }else{
@@ -132,14 +133,13 @@ public class Blackjack {
             for (Player winner: winners) {
                 if(i == 0){
                     winnersResults.append(winner.getName());
-
                     i++;
                 }else{
                     winnersResults.append(", ").append(winner.getName());
                 }
             }
             winnersResults.append("\n You have Won!!!!!!!");
-            System.out.println(winnersResults.toString());
+            System.out.println(winnersResults);
         }
 
         String toContinue = blackjackIO.promptForStringChoice("Would you like to continue? (Y/N)","Y","N");
@@ -169,7 +169,7 @@ public class Blackjack {
         StringBuilder winnersResultsWrite = new StringBuilder();
         winnersResultsWrite.append("Congratulations: ");
         for (Player winner:winners) {
-            String timeChoice = "";
+            String timeChoice;
             if (winner.getTimesWon() == 1) {
                 timeChoice = "time";
             } else {
