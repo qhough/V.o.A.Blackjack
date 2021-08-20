@@ -45,7 +45,7 @@ public class Blackjack {
         players.get(0).setName("Dealer");
         for(int i=0; i<playerCount; i++) {
 
-            String nameRequested = blackjackIO.promptForString("What would you like your name to be? ");
+            String nameRequested = blackjackIO.promptForString("What would you like your name to be Player " + (i+1) + " ? ");
             players.add(new Player());
             players.get(i+1).setName(nameRequested);
         }
@@ -64,9 +64,9 @@ public class Blackjack {
                     if (p != players.get(0)) {
                         System.out.println("The dealer has: " + players.get(0).getHand().get(0) + " as their first card.");
                     }
-                    System.out.println(p.getName() + ": Would you like to hit or stand\n 0)Hit \n 1)Stand");
-                    int choice = blackjackIO.promptForInt(0, 1);
-                    if (choice == 0) {
+                    System.out.println(p.getName() + ": Would you like to hit or stand\n+)Hit \n0)Stand");
+                    String choice = blackjackIO.promptForStringChoice("", "+","0");
+                    if (choice == "+") {
                         p.getHand().add(getNextCard());
                         p.checkBusted(p);
                     } else {

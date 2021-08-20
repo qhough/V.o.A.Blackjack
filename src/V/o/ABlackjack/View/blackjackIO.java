@@ -30,7 +30,7 @@ public class blackjackIO {
             try {
                 bigInput = consoleIn.readLine();
                 if(bigInput.equalsIgnoreCase(ChoiceOne)|| bigInput.equalsIgnoreCase(ChoiceTwo)) {
-                    return bigInput;
+                    return bigInput.trim();
                 }else{
                     System.out.println("You can only answer with "+ChoiceOne + " or "+ChoiceTwo);
                 }
