@@ -1,7 +1,5 @@
 package V.o.ABlackjack.Models;
 
-import V.o.ABlackjack.Controller.Blackjack;
-
 import java.util.ArrayList;
 
 public class Player {

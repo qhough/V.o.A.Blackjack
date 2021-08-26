@@ -10,8 +10,8 @@ import java.time.format.DateTimeFormatter;
 public class blackjackIO {
     private static final BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
 
-    public static String promptForString(String bigPrompt){
-        while(true) {
+    public static String promptForString(String bigPrompt) {
+        while (true) {
             System.out.println(bigPrompt);
             String bigInput = "";
             try {
@@ -23,16 +23,16 @@ public class blackjackIO {
         }
     }
 
-    public static String promptForStringChoice(String bigPrompt, String ChoiceOne,String ChoiceTwo){
-        while(true) {
+    public static String promptForStringChoice(String bigPrompt, String ChoiceOne, String ChoiceTwo) {
+        while (true) {
             System.out.println(bigPrompt);
             String bigInput = "";
             try {
                 bigInput = consoleIn.readLine();
-                if(bigInput.equalsIgnoreCase(ChoiceOne)|| bigInput.equalsIgnoreCase(ChoiceTwo)) {
+                if (bigInput.equalsIgnoreCase(ChoiceOne) || bigInput.equalsIgnoreCase(ChoiceTwo)) {
                     return bigInput.trim();
-                }else{
-                    System.out.println("You can only answer with "+ChoiceOne + " or "+ChoiceTwo);
+                } else {
+                    System.out.println("You can only answer with " + ChoiceOne + " or " + ChoiceTwo);
                 }
             } catch (Exception ex) {
                 System.err.println("Input cannot be null or empty; you entered '" + bigInput + "'");
@@ -40,13 +40,13 @@ public class blackjackIO {
         }
     }
 
-    public static int promptForInt(int min, int max){
+    public static int promptForInt(int min, int max) {
         do {
 
             try {
                 String rawInput = consoleIn.readLine().trim();
                 int input = Integer.parseInt(rawInput);
-                if(input < min || input > max) {
+                if (input < min || input > max) {
                     throw new IllegalArgumentException(
                             "number must be between " + min + " and " + max);
                 }
@@ -59,20 +59,21 @@ public class blackjackIO {
                         "You have to enter an number between " + min + " and " + max + ".");
                 System.err.println("Please try again.");
             }
-        } while(true);
+        } while (true);
     }
 
     public static void writeTextToFile(String filePath, String text, String date, boolean append) {
         //try with resources
         try {
             FileWriter writer = new FileWriter(filePath, append);
-            writer.write( text + "-" + date +"\n");
+            writer.write(text + "-" + date + "\n");
             writer.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
-    public static String timeStamp(){
+
+    public static String timeStamp() {
         LocalDateTime localDate = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         return dateTimeFormatter.format(localDate);

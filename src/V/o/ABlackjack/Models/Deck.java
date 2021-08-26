@@ -6,8 +6,8 @@ import java.util.Collections;
 public class Deck {
     private static final ArrayList<Card> deck = new ArrayList<>();
 
-    public Deck(){
-        
+    public Deck() {
+
         deck.add(new Card(Faces.TWO, Suit.HEARTS));
         deck.add(new Card(Faces.TWO, Suit.DIAMOND));
         deck.add(new Card(Faces.TWO, Suit.CLUBS));
@@ -62,17 +62,18 @@ public class Deck {
         deck.add(new Card(Faces.ACE11, Suit.SPADES));
 
     }
-    public static void shuffleDeck(){
+
+    public static void shuffleDeck() {
         Collections.shuffle(deck);
     }
 
-    public void moveCardToBottom(){
+    public void moveCardToBottom() {
         Card ph = deck.get(0);
         deck.remove(0);
         deck.add(ph);
     }
 
-    public ArrayList<Card> getDeck(){
+    public ArrayList<Card> getDeck() {
         return deck;
     }
 
